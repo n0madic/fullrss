@@ -11,10 +11,10 @@ feeds:
       - ".addthis_sharing_toolbox"
       - "#related-materials-id"
       text:
-      - На правах рекламы
-      - Если вы заметили ошибку — выделите ее мышью и нажмите CTRL+ENTER.
-      - Виджет от SocialMart
-      - 'Источник:'
+      - "На правах рекламы"
+      - "Если вы заметили ошибку — выделите ее мышью и нажмите CTRL+ENTER."
+      - "Виджет от SocialMart"
+      - "Источник:"
     method: pyquery
     method_query: ".body-full"
     url: https://3dnews.ru/news/rss/
@@ -24,7 +24,7 @@ feeds:
     method: readability
     url: http://feeds.feedburner.com/alternathistory
   antropogenez.ru:
-    description: 'Antropogenez.ru: Портал об эволюции человека'
+    description: Antropogenez.ru - Портал об эволюции человека
     filters:
       selectors:
       - ".news-single-backlink"
@@ -82,7 +82,7 @@ feeds:
     method_query: ".post__body_full"
     url: https://habrahabr.ru/rss/hubs/
   iphones.ru-halyava:
-    description: 'iPhones.ru: ТОП халявы'
+    description: iPhones.ru - ТОП халявы
     filters:
       selectors:
       - ".post__neighbors"
@@ -113,7 +113,7 @@ feeds:
     method_query: "#the-post"
     url: https://www.javacodegeeks.com/feed/
   kg-portal:
-    description: КГ-Портал — Вся правда о Голливуде
+    description: КГ-Портал - Вся правда о Голливуде
     filters:
       selectors:
       - ".tabs"
@@ -143,18 +143,18 @@ feeds:
       - ".main_idea"
       text:
       - "Подписывайтесь на аккаунт LIGA.net"
-      - 'Смотрите также:'
-      - 'Читайте также:'
+      - "Смотрите также:"
+      - "Читайте также:"
     method: pyquery
     method_query: "._ga1_on_"
     url: http://news.liga.net/top/rss.xml
   meddaily:
-    description: 'MedDaily: Новости медицины'
+    description: MedDaily - Новости медицины
     filters:
       selectors:
       - ".topic_image_subscibe"
     method: pyquery
-    method_query: '.topic_text[style="margin-bottom: 25px"]'
+    method_query: ".topic_text[style='margin-bottom: 25px']"
     url: http://meddaily.ru/rss
   medportalnews:
     description: МедНовости.ру
@@ -263,7 +263,7 @@ feeds:
       - ".article-footer"
       - ".article-social"
       text:
-      - 'Смотрите также:'
+      - "Смотрите также:"
     method: pyquery
     method_query: ".article-entry"
     url: http://yablyk.com/feed/
