@@ -124,7 +124,7 @@ class Config(dict):
         self.load()
 
     def load(self):
-        with open(self.filename) as config_file:
+        with open(self.filename, encoding='utf-8') as config_file:
             self.update(yaml.load(config_file))
         self.set_feeds()
         self.set_memcache()
@@ -175,7 +175,7 @@ def get_feed(feedname):
 @app.route('/config/<output_format>')
 def get_config(output_format):
     if output_format == 'yaml':
-        return yaml.dump(config, allow_unicode=True, default_flow_style=False), {
+        return yaml.dump(dict(config), allow_unicode=True, default_flow_style=False), {
             'Content-Type': 'text/yaml; charset=utf-8'}
     if output_format == 'json':
         return jsonify(config)
