@@ -1,5 +1,7 @@
 Flask
 feedparser
+gevent
+gunicorn
 requests
 pyquery
 python-memcached

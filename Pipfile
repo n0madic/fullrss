@@ -7,13 +7,15 @@ verify_ssl = true
 
 [packages]
 
-Flask = "*"
+flask = "*"
 feedparser = "*"
 requests = "*"
 pyquery = "*"
 python-memcached = "*"
-PyYAML = "*"
+pyyaml = "*"
 readability-lxml = "*"
+gevent = "*"
+gunicorn = "*"
 
 
 [dev-packages]
