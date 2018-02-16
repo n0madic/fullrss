@@ -1,0 +1,7 @@
+Flask
+feedparser
+requests
+pyquery
+python-memcached
+PyYAML
+readability-lxml
