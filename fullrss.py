@@ -89,14 +89,12 @@ class FullFeed(object):
                             author=parsed.feed.author if 'author' in parsed.feed else None,
                             feed_url=self.url,
                             url=parsed.feed.link,
-                            links=parsed.feed.links if 'links' in parsed.feed else [],
+                            logo=parsed.feed.get('logo'),
+                            icon=parsed.feed.get('icon'),
+                            links=parsed.feed.get('links', []),
                             generator=('fullrss.py by Nomadic',
                                        'https://github.com/n0madic/fullrss', '0.1')
                             )
-            if 'logo' in parsed.feed:
-                feed.logo = parsed.feed.logo
-            if 'icon' in parsed:
-                feed.icon = parsed.feed.icon
             for entry in ThreadPool(10).map(self.full_summary, parsed.entries):
                 try:
                     feed.add(title=entry.title,
@@ -152,7 +150,7 @@ def startup():
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index.html')
 def index():
     feed = request.args.get('feed', type=str)
     if feed:
