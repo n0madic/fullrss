@@ -15,7 +15,6 @@ from pyquery import PyQuery
 from readability import Document
 from urllib.parse import urljoin
 from werkzeug.contrib.atom import AtomFeed
-from werkzeug.contrib.cache import MemcachedCache
 import feedparser
 import lxml.html
 import os
@@ -137,8 +136,15 @@ class Config(dict):
         self.feeds[name] = FullFeed(**kargs)
 
     def set_memcache(self):
-        memcached_host = self['settings'].get('memcache', '127.0.0.1:11211')
-        self.memcache = MemcachedCache([memcached_host])
+        if os.environ.get('MEMCACHEDCLOUD_SERVERS'):
+            import bmemcached
+            self.memcache = bmemcached.Client(os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+                                              os.environ.get('MEMCACHEDCLOUD_USERNAME'),
+                                              os.environ.get('MEMCACHEDCLOUD_PASSWORD'))
+        else:
+            from werkzeug.contrib.cache import MemcachedCache
+            memcached_host = self['settings'].get('memcached', '127.0.0.1:11211')
+            self.memcache = MemcachedCache([memcached_host])
 
 
 config = Config('fullrss.yaml')

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7aee26738dabe6351c59fc49408c5c217cf39ef07dd2ee270443f2c0ca58ea53"
+            "sha256": "fd45682625a225f71bb6e15303bf2a72f57bef0bf1a6521df893910d285828da"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -198,6 +198,12 @@
                 "sha256:4771db76bd14352eba006463656aef990a0147a0eeaf094725097acfa90442bf"
             ],
             "version": "==1.4.0"
+        },
+        "python-binary-memcached": {
+            "hashes": [
+                "sha256:e2e535ce1466104a93c0174a1a9217f6dd80d1ceafcc8a4205cbc29c09ae2252"
+            ],
+            "version": "==0.26.1"
         },
         "python-memcached": {
             "hashes": [

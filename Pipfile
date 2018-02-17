@@ -9,13 +9,14 @@ verify_ssl = true
 
 flask = "*"
 feedparser = "*"
+gevent = "*"
+gunicorn = "*"
 requests = "*"
 pyquery = "*"
+python-binary-memcached = "*"
 python-memcached = "*"
 pyyaml = "*"
 readability-lxml = "*"
-gevent = "*"
-gunicorn = "*"
 
 
 [dev-packages]

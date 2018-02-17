@@ -4,6 +4,7 @@ gevent
 gunicorn
 requests
 pyquery
+python-binary-memcached
 python-memcached
 PyYAML
 readability-lxml
