@@ -89,6 +89,9 @@ feeds:
       - ".post_social_footer"
       - ".social-share"
       - ".post_sidebar-fb_post_block"
+      - ".post_page__schema_none"
+      - ".post__tags-cont"
+      - ".push-notifier-block"
       text:
       - "Самые сочные цены на технику Apple"
       - "крутых скидки специально для вас"
@@ -100,6 +103,8 @@ feeds:
     filters:
       selectors:
       - ".entry-tags"
+      - ".hotline-linker"
+      - ".post-ratings-wrp"
     method: pyquery
     method_query: ".post-txt"
     url: http://itc.ua/rss/news.xml
@@ -126,6 +131,7 @@ feeds:
       selectors:
       - ".b-box"
       - ".b-topic__socials"
+      - ".b-inline-topics-box"
     method: pyquery
     method_query: ".b-topic__content"
     url: http://lenta.ru/rss/news/science
