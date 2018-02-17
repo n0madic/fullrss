@@ -15,12 +15,15 @@ from pyquery import PyQuery
 from readability import Document
 from urllib.parse import urljoin
 from werkzeug.contrib.atom import AtomFeed
+from werkzeug.contrib.fixers import ProxyFix
 import feedparser
 import lxml.html
 import os
 import requests
 import time
 import yaml
+
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
 class FullFeed(object):
