@@ -134,6 +134,11 @@ class Config(dict):
         self.set_feeds()
         self.set_memcache()
 
+    def save(self):
+        with open(self.filename, 'w') as config_file:
+            yaml.safe_dump(dict(self), config_file, allow_unicode=True, default_flow_style=False)
+        app.logger.info('Config saved')
+
     def set_feeds(self):
         for feed, kargs in self['feeds'].items():
             self.set_feed(feed, **kargs)

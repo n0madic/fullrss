@@ -1,22 +1,21 @@
----
 feeds:
   3dnews:
     description: 3DNews - Новости Hardware
     filters:
       selectors:
-      - ".related"
-      - ".typo-hint"
-      - ".relatedbox"
-      - ".commentlinkblock"
-      - ".addthis_sharing_toolbox"
-      - "#related-materials-id"
+      - .related
+      - .typo-hint
+      - .relatedbox
+      - .commentlinkblock
+      - .addthis_sharing_toolbox
+      - '#related-materials-id'
       text:
-      - "На правах рекламы"
-      - "Если вы заметили ошибку — выделите ее мышью и нажмите CTRL+ENTER."
-      - "Виджет от SocialMart"
-      - "Источник:"
+      - На правах рекламы
+      - Если вы заметили ошибку — выделите ее мышью и нажмите CTRL+ENTER.
+      - Виджет от SocialMart
+      - 'Источник:'
     method: pyquery
-    method_query: ".body-full"
+    method_query: .body-full
     url: https://3dnews.ru/news/rss/
   alternathistory:
     base_href: http://alternathistory.com
@@ -27,27 +26,27 @@ feeds:
     description: Antropogenez.ru - Портал об эволюции человека
     filters:
       selectors:
-      - ".news-single-backlink"
-      - ".next-prev-news"
-      - ".lupa"
+      - .news-single-backlink
+      - .next-prev-news
+      - .lupa
     method: xpath
-    method_query: "//div[@class='news-single-item']|//div[@class='entry-content']"
+    method_query: //div[@class='news-single-item']|//div[@class='entry-content']
     url: https://feeds.feedburner.com/Antropogenez
   automation-remarks:
     description: Заметки Автоматизатора
     method: pyquery
-    method_query: ".post-content"
+    method_query: .post-content
     url: http://automation-remarks.com/rss/index.rss
   cbio:
     description: Интернет-журнал "Коммерческая биотехнология". CBio.ru
     filters:
       selectors:
-      - ".comments"
-      - ".your_com"
-      - ".back_list"
-      - ".icons"
+      - .comments
+      - .your_com
+      - .back_list
+      - .icons
     method: pyquery
-    method_query: ".left_block"
+    method_query: .left_block
     url: http://cbio.ru/?rss
   elementy:
     description: Элементы - новости науки
@@ -57,116 +56,116 @@ feeds:
     description: Фактрум
     filters:
       selectors:
-      - ".facebook"
-      - "h1"
+      - .facebook
+      - h1
     method: readability
     url: http://www.factroom.ru/feed
   falsifikat:
     description: Фальсификаты
     filters:
       selectors:
-      - ".yarpp-related"
+      - .yarpp-related
       text:
-      - "Статья прочитана"
+      - Статья прочитана
     method: pyquery
-    method_query: ".text"
+    method_query: .text
     url: http://falsifikat.net/feed
   geektimes:
     description: Geektimes
     method: pyquery
-    method_query: ".post__body_full"
+    method_query: .post__body_full
     url: http://geektimes.ru/rss/hubs/
   habrahabr:
     description: Хабрахабр
     method: pyquery
-    method_query: ".post__body_full"
+    method_query: .post__body_full
     url: https://habrahabr.ru/rss/hubs/
   iphones.ru-halyava:
     description: iPhones.ru - ТОП халявы
     filters:
       selectors:
-      - ".post__neighbors"
-      - ".post_social_footer"
-      - ".social-share"
-      - ".post_sidebar-fb_post_block"
-      - ".post_page__schema_none"
-      - ".post__tags-cont"
-      - ".push-notifier-block"
+      - .post__neighbors
+      - .post_social_footer
+      - .social-share
+      - .post_sidebar-fb_post_block
+      - .post_page__schema_none
+      - .post__tags-cont
+      - .push-notifier-block
       text:
-      - "Самые сочные цены на технику Apple"
-      - "крутых скидки специально для вас"
+      - Самые сочные цены на технику Apple
+      - крутых скидки специально для вас
     method: pyquery
-    method_query: ".post"
+    method_query: .post
     url: http://www.iphones.ru/tag/rasprodazhi/feed
   itc:
     description: ITC.UA
     filters:
       selectors:
-      - ".entry-tags"
-      - ".hotline-linker"
-      - ".post-ratings-wrp"
+      - .entry-tags
+      - .hotline-linker
+      - .post-ratings-wrp
     method: pyquery
-    method_query: ".post-txt"
+    method_query: .post-txt
     url: http://itc.ua/rss/news.xml
   javacodegeeks:
     description: Java Code Geeks
     filters:
       selectors:
-      - ".ulp-inline-window"
-      - ".attribution"
+      - .ulp-inline-window
+      - .attribution
     method: pyquery
-    method_query: "#the-post"
+    method_query: '#the-post'
     url: https://www.javacodegeeks.com/feed/
   kg-portal:
     description: КГ-Портал - Вся правда о Голливуде
     filters:
       selectors:
-      - ".tabs"
+      - .tabs
     method: xpath
-    method_query: "//*[contains(@class, 'news_text')]"
+    method_query: //*[contains(@class, 'news_text')]
     url: http://kg-portal.ru/rss/news.rss
   lentaruscience:
     description: Lenta.ru / Наука
     filters:
       selectors:
-      - ".b-box"
-      - ".b-topic__socials"
-      - ".b-inline-topics-box"
+      - .b-box
+      - .b-topic__socials
+      - .b-inline-topics-box
     method: pyquery
-    method_query: ".b-topic__content"
+    method_query: .b-topic__content
     url: http://lenta.ru/rss/news/science
   liganewstop:
     description: ЛІГАБізнесІнформ топ-новости
     filters:
       selectors:
-      - ".social_buttons"
-      - ".detail_print_banner"
-      - ".icon-viber"
-      - "#snippet_block_news"
-      - "#ajaxOrphusmes"
-      - ".site-block"
-      - ".clearfix"
-      - ".main_idea"
+      - .social_buttons
+      - .detail_print_banner
+      - .icon-viber
+      - '#snippet_block_news'
+      - '#ajaxOrphusmes'
+      - .site-block
+      - .clearfix
+      - .main_idea
       text:
-      - "Подписывайтесь на аккаунт LIGA.net"
-      - "Смотрите также:"
-      - "Читайте также:"
+      - Подписывайтесь на аккаунт LIGA.net
+      - 'Смотрите также:'
+      - 'Читайте также:'
     method: pyquery
-    method_query: "._ga1_on_"
+    method_query: ._ga1_on_
     url: http://news.liga.net/top/rss.xml
   meddaily:
     description: MedDaily - Новости медицины
     filters:
       selectors:
-      - ".topic_image_subscibe"
+      - .topic_image_subscibe
     method: pyquery
-    method_query: ".topic_text[style='margin-bottom: 25px']"
+    method_query: '.topic_text[style="margin-bottom: 25px"]'
     url: http://meddaily.ru/rss
   medportalnews:
     description: МедНовости.ру
     filters:
       selectors:
-      - ".linkrmore"
+      - .linkrmore
     method: pyquery
     method_query: div[itemprop="articleBody"]
     url: http://medportal.ru/news/rss/
@@ -174,16 +173,16 @@ feeds:
     description: Мир фантастики
     filters:
       selectors:
-      - "#hypercomments_widget"
-      - ".mistape_caption"
-      - ".likely-container"
-      - ".cb-review-box"
-      - ".su-see-also"
-      - ".hc-link"
+      - '#hypercomments_widget'
+      - .mistape_caption
+      - .likely-container
+      - .cb-review-box
+      - .su-see-also
+      - .hc-link
       text:
-      - "comments powered by HyperComments"
+      - comments powered by HyperComments
     method: pyquery
-    method_query: ".entry-content"
+    method_query: .entry-content
     url: http://www.mirf.ru/feed
   naked_science:
     description: Naked Science - Научно популярный портал
@@ -194,84 +193,84 @@ feeds:
     description: Новости Open Source, GNU/Linux и UNIX от nixp.ru
     filters:
       selectors:
-      - ".tag_cloud_container"
-      - ".source"
+      - .tag_cloud_container
+      - .source
     method: pyquery
-    method_query: ".newstext-full"
+    method_query: .newstext-full
     url: http://feeds2.feedburner.com/nixpru
   popadenec:
     description: popadenec.ru
     filters:
       selectors:
-      - ".fivestar-static-form-item"
-      - ".fivestar-form-item"
+      - .fivestar-static-form-item
+      - .fivestar-form-item
     method: pyquery
-    method_query: ".content.clear-block"
+    method_query: .content.clear-block
     url: http://www.popadenec.ru/rss.xml
   postall:
     description: PostAll.ru - Хроники миров Постапокалипсиса
     filters:
       selectors:
-      - ".inline"
-      - ".rate-widget"
-      - "#comments"
+      - .inline
+      - .rate-widget
+      - '#comments'
     method: xpath
-    method_query: "//*[contains(@class, 'node-news')]"
+    method_query: //*[contains(@class, 'node-news')]
     url: http://postall.ru/rss.xml
   pravda_mainnews:
     description: Украинская правда - важные новости
     filters:
       selectors:
-      - ".tags"
+      - .tags
       text:
-      - "Если вы заметили ошибку, выделите ее мышкой и нажмите Ctrl+Enter"
+      - Если вы заметили ошибку, выделите ее мышкой и нажмите Ctrl+Enter
     method: pyquery
-    method_query: ".post_news__text"
+    method_query: .post_news__text
     url: http://www.pravda.com.ua/rus/rss/view_mainnews/
   qa-hh.ua:
     description: Вакансии QA Киев / HeadHunter.ua
     method: pyquery
-    method_query: ".l-paddings.b-vacancy-desc.g-user-content"
+    method_query: .l-paddings.b-vacancy-desc.g-user-content
     url: https://hh.ua/search/vacancy/rss?text=Qa+engineer%2C+qa+Automation+engineer&amp;enable_snippets=true&amp;clusters=true&amp;currency_code=UAH&amp;area=115
   qa-rabota.ua:
     description: Вакансии QA Киев / Rabota.ua
     method: pyquery
-    method_query: ".f-vacancy-inner-wrapper, .d_content"
+    method_query: .f-vacancy-inner-wrapper, .d_content
     url: https://goo.gl/lMxcV3
   qa-work.ua:
     description: Вакансии QA Киев / Work.ua
     method: xpath
-    method_query: "//div[@class='card'][h1]"
+    method_query: //div[@class='card'][h1]
     url: http://site2rss.nomadic.name/feed.php?url=http%3A%2F%2Fwww.work.ua%2Fjobs-kv-qa%2F&title=.card+h2+a&link=.card+h2+a&author=div.card-hover+div%3Espan%3Anth-child%281%29&date=&content=.card+p.text-muted&content_filters=
   sciencealert:
     description: The Latest - ScienceAlert
     method: pyquery
-    method_query: ".article-container"
+    method_query: .article-container
     url: http://site2rss.nomadic.name/feed.php?url=http%3A%2F%2Fwww.sciencealert.com%2Fthe-latest&title=[class*%3D%27titletext%27]&link=[class*%3D%27titletext%27]+a&author=.time-and-like&date=.time-and-like+[class*%3D%27time%27]&content=[class*%3D%27titletext%27]&
   shellhacks:
     description: ShellHacks
     method: pyquery
-    method_query: ".entry-content"
+    method_query: .entry-content
     url: https://www.shellhacks.com/ru/feed/
   steam:
     description: Valve Steam News
     method: pyquery
-    method_query: ".body"
+    method_query: .body
     url: http://store.steampowered.com/feeds/news.xml
   windowsnotesru:
     description: Заметки о Windows
     method: pyquery
-    method_query: ".post-text"
+    method_query: .post-text
     url: http://feeds.feedburner.com/windowsnotesru
   yablyk:
     description: Yablyk - Все новости Apple
     filters:
       selectors:
-      - ".article-footer"
-      - ".article-social"
+      - .article-footer
+      - .article-social
       text:
-      - "Смотрите также:"
+      - 'Смотрите также:'
     method: pyquery
-    method_query: ".article-entry"
+    method_query: .article-entry
     url: http://yablyk.com/feed/
 settings: {}
