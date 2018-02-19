@@ -163,6 +163,7 @@ def startup():
 
 @app.route('/')
 @app.route('/index.html')
+@app.route('/index.php')
 def index():
     feed = request.args.get('feed', type=str)
     if feed:
