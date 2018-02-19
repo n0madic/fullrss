@@ -77,43 +77,46 @@ class FullFeed(object):
             entry.full_summary = entry.summary
         return entry
 
-    def get(self):
+    def get(self, index=-1):
         mimetypes = {'text/html': 'html', 'text/plain': 'text'}
         parsed = feedparser.parse(self.url)
         if parsed.bozo:
             app.logger.error(parsed.bozo_exception)
         if parsed.entries:
-            feed_updated = parsed.feed.get('updated_parsed', parsed.feed.get('published_parsed', time.localtime()))
-            feed = AtomFeed(title=parsed.feed.get('title', self.description),
-                            title_type=mimetypes[parsed.feed.title_detail.type],
-                            subtitle=parsed.feed.subtitle,
-                            subtitle_type=mimetypes[parsed.feed.subtitle_detail.type],
-                            author=parsed.feed.author if 'author' in parsed.feed else None,
-                            feed_url=self.url,
-                            url=parsed.feed.link,
-                            logo=parsed.feed.get('logo'),
-                            icon=parsed.feed.get('icon'),
-                            links=parsed.feed.get('links', []),
-                            generator=('fullrss.py by Nomadic',
-                                       'https://github.com/n0madic/fullrss', '0.1')
-                            )
-            for entry in ThreadPool(10).map(self.full_summary, parsed.entries):
-                try:
-                    feed.add(title=entry.title,
-                             title_type=mimetypes[entry.title_detail.type],
-                             summary=entry.full_summary,
-                             summary_type='html',
-                             author=entry.get('author'),
-                             url=entry.link,
-                             links=entry.get('links', []),
-                             id=entry.get('guid', entry.link),
-                             updated=datetime(*entry.get('updated_parsed', feed_updated)[:6]),
-                             published=datetime(*entry.get('published_parsed', feed_updated)[:6]),
-                             categories=entry.tags if 'tags' in entry else []
-                             )
-                except ValueError as e:
-                    app.logger.error('Skipped feed entry {} ({}):\n{}'.format(entry.title, entry.link, e))
-            return feed.get_response()
+            if index >= 0:
+                return self.full_summary(parsed.entries[index])
+            else:
+                feed_updated = parsed.feed.get('updated_parsed', parsed.feed.get('published_parsed', time.localtime()))
+                feed = AtomFeed(title=parsed.feed.get('title', self.description),
+                                title_type=mimetypes[parsed.feed.title_detail.type],
+                                subtitle=parsed.feed.subtitle,
+                                subtitle_type=mimetypes[parsed.feed.subtitle_detail.type],
+                                author=parsed.feed.author if 'author' in parsed.feed else None,
+                                feed_url=self.url,
+                                url=parsed.feed.link,
+                                logo=parsed.feed.get('logo'),
+                                icon=parsed.feed.get('icon'),
+                                links=parsed.feed.get('links', []),
+                                generator=('fullrss.py by Nomadic',
+                                           'https://github.com/n0madic/fullrss', '0.1')
+                                )
+                for entry in ThreadPool(10).map(self.full_summary, parsed.entries):
+                    try:
+                        feed.add(title=entry.title,
+                                 title_type=mimetypes[entry.title_detail.type],
+                                 summary=entry.full_summary,
+                                 summary_type='html',
+                                 author=entry.get('author'),
+                                 url=entry.link,
+                                 links=entry.get('links', []),
+                                 id=entry.get('guid', entry.link),
+                                 updated=datetime(*entry.get('updated_parsed', feed_updated)[:6]),
+                                 published=datetime(*entry.get('published_parsed', feed_updated)[:6]),
+                                 categories=entry.tags if 'tags' in entry else []
+                                 )
+                    except ValueError as e:
+                        app.logger.error('Skipped feed entry {} ({}):\n{}'.format(entry.title, entry.link, e))
+                return feed.get_response()
         else:
             return repr(parsed.bozo_exception), 503
 
@@ -177,6 +180,19 @@ def favicon():
 def get_feed(feedname):
     if feedname in config.feeds:
         return config.feeds[feedname].get()
+    else:
+        abort(404)
+
+
+@app.route('/entry/<feedname>/')
+@app.route('/entry/<feedname>/<int:index>')
+def test_feed(feedname, index=0):
+    if feedname in config.feeds:
+        try:
+            entry = config.feeds[feedname].get(index)
+            return entry.full_summary
+        except IndexError as ie:
+            return str(ie), 500
     else:
         abort(404)
 
