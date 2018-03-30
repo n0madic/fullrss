@@ -31,4 +31,7 @@ ENV MAXITEMSIZE 1m
 ENV WORKERS 4
 
 # Run app with memcached when the container launches
-CMD ["sh", "-c", "memcached -d -u memcache -m $CACHESIZE -I $MAXITEMSIZE && exec gunicorn -w $WORKERS -b :8000 -k gevent fullrss:app"]
+CMD ["sh", "-c", \
+     "memcached -d -u memcache -m $CACHESIZE -I $MAXITEMSIZE && \
+      exec gunicorn -w $WORKERS -b :8000 -k gevent fullrss:app  \
+     "]
