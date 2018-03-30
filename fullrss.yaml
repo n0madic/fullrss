@@ -242,11 +242,6 @@ feeds:
     method: xpath
     method_query: //div[@class='card'][h1]
     url: http://site2rss.nomadic.name/feed.php?url=http%3A%2F%2Fwww.work.ua%2Fjobs-kv-qa%2F&title=.card+h2+a&link=.card+h2+a&author=div.card-hover+div%3Espan%3Anth-child%281%29&date=&content=.card+p.text-muted&content_filters=
-  sciencealert:
-    description: The Latest - ScienceAlert
-    method: pyquery
-    method_query: .article-container
-    url: http://site2rss.nomadic.name/feed.php?url=http%3A%2F%2Fwww.sciencealert.com%2Fthe-latest&title=[class*%3D%27titletext%27]&link=[class*%3D%27titletext%27]+a&author=.time-and-like&date=.time-and-like+[class*%3D%27time%27]&content=[class*%3D%27titletext%27]&
   shellhacks:
     description: ShellHacks
     method: pyquery
