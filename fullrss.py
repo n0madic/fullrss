@@ -89,9 +89,10 @@ class FullFeed(object):
                 feed_updated = parsed.feed.get('updated_parsed', parsed.feed.get('published_parsed', time.localtime()))
                 feed = AtomFeed(title=parsed.feed.get('title', self.description),
                                 title_type=mimetypes[parsed.feed.title_detail.type],
-                                subtitle=parsed.feed.subtitle,
-                                subtitle_type=mimetypes[parsed.feed.subtitle_detail.type],
-                                author=parsed.feed.author if 'author' in parsed.feed else None,
+                                subtitle=parsed.feed.get('subtitle'),
+                                subtitle_type=mimetypes[parsed.feed.subtitle_detail.type if parsed.feed.get(
+                                    'subtitle_detail') else 'text/html'],
+                                author=parsed.feed.get('author'),
                                 feed_url=self.url,
                                 url=parsed.feed.link,
                                 logo=parsed.feed.get('logo'),
