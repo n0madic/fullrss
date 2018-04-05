@@ -139,21 +139,21 @@ feeds:
     description: ЛІГАБізнесІнформ топ-новости
     filters:
       selectors:
-      - .social_buttons
-      - .detail_print_banner
-      - .icon-viber
-      - '#snippet_block_news'
-      - '#ajaxOrphusmes'
-      - .site-block
-      - .clearfix
-      - .main_idea
+      - .title-news-head
+      - .soc-buttons
+      - .adver-block
+      - .social-likes
+      - .read-too
+      - .popular-news
+      - .view-subscribe
+      - .author
       text:
       - Подписывайтесь на аккаунт LIGA.net
       - 'Смотрите также:'
       - 'Читайте также:'
     method: pyquery
-    method_query: ._ga1_on_
-    url: http://news.liga.net/top/rss.xml
+    method_query: .news-wrap
+    url: http://www.liga.net/news/top/rss.xml
   meddaily:
     description: MedDaily - Новости медицины
     filters:
