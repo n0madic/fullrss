@@ -27,10 +27,12 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
 class FullFeed(object):
-    def __init__(self, url, base_href="", description='', method='readability', method_query='', filters=None):
+    def __init__(self, url, base_href="", charset=None, description='', method='readability', method_query='',
+                 filters=None):
         self.description = description
         self.url = url
         self.base_href = base_href if base_href else urljoin(url, '/')
+        self.charset = charset
         self.method = method
         self.method_query = method_query
         self.filters = filters if filters else {}
@@ -45,7 +47,9 @@ class FullFeed(object):
                 try:
                     response = requests.get(entry.link, headers=headers, timeout=(3, 10))
                     if response.status_code == 200 and response.text:
-                        if response.encoding == 'ISO-8859-1':
+                        if self.charset:
+                            response.encoding = self.charset
+                        elif response.encoding == 'ISO-8859-1':
                             response.encoding = response.apparent_encoding
                         config.memcache.set(entry.link, response.text)
                         html = response.text

@@ -99,6 +99,7 @@ feeds:
     method_query: .post
     url: http://www.iphones.ru/tag/rasprodazhi/feed
   itc:
+    charset: UTF-8
     description: ITC.UA
     filters:
       selectors:
