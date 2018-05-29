@@ -53,24 +53,6 @@ feeds:
     description: Элементы - новости науки
     method: readability
     url: http://elementy.ru/rss/news
-  factroom:
-    description: Фактрум
-    filters:
-      selectors:
-      - .facebook
-      - h1
-    method: readability
-    url: http://www.factroom.ru/feed
-  falsifikat:
-    description: Фальсификаты
-    filters:
-      selectors:
-      - .yarpp-related
-      text:
-      - Статья прочитана
-    method: pyquery
-    method_query: .text
-    url: http://falsifikat.net/feed
   habrahabr:
     description: Хабрахабр
     method: pyquery
@@ -87,6 +69,9 @@ feeds:
       - .post_page__schema_none
       - .post__tags-cont
       - .push-notifier-block
+      - .postpage_telega
+      - .postpage__favorites
+      - .post_author_desc
       text:
       - Самые сочные цены на технику Apple
       - крутых скидки специально для вас
@@ -185,16 +170,6 @@ feeds:
     description: Naked Science - Научно популярный портал
     method: readability
     url: http://naked-science.ru/feedrss.xml
-  nixp:
-    base_href: https://www.nixp.ru
-    description: Новости Open Source, GNU/Linux и UNIX от nixp.ru
-    filters:
-      selectors:
-      - .tag_cloud_container
-      - .source
-    method: pyquery
-    method_query: .newstext-full
-    url: http://feeds2.feedburner.com/nixpru
   popadenec:
     description: popadenec.ru
     filters:
@@ -234,11 +209,6 @@ feeds:
     method: pyquery
     method_query: .f-vacancy-inner-wrapper, .d_content
     url: https://goo.gl/lMxcV3
-  qa-work.ua:
-    description: Вакансии QA Киев / Work.ua
-    method: xpath
-    method_query: //div[@class='card'][h1]
-    url: http://site2rss.nomadic.name/feed.php?url=http%3A%2F%2Fwww.work.ua%2Fjobs-kv-qa%2F&title=.card+h2+a&link=.card+h2+a&author=div.card-hover+div%3Espan%3Anth-child%281%29&date=&content=.card+p.text-muted&content_filters=
   shellhacks:
     description: ShellHacks
     method: pyquery
