@@ -71,16 +71,11 @@ feeds:
     method: pyquery
     method_query: .text
     url: http://falsifikat.net/feed
-  geektimes:
-    description: Geektimes
-    method: pyquery
-    method_query: .post__body_full
-    url: http://geektimes.ru/rss/hubs/
   habrahabr:
     description: Хабрахабр
     method: pyquery
     method_query: .post__body_full
-    url: https://habrahabr.ru/rss/hubs/
+    url: https://habr.com/rss/all/all/
   iphones.ru-halyava:
     description: iPhones.ru - ТОП халявы
     filters:
