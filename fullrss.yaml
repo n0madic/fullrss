@@ -170,25 +170,6 @@ feeds:
     description: Naked Science - Научно популярный портал
     method: readability
     url: http://naked-science.ru/feedrss.xml
-  popadenec:
-    description: popadenec.ru
-    filters:
-      selectors:
-      - .fivestar-static-form-item
-      - .fivestar-form-item
-    method: pyquery
-    method_query: .content.clear-block
-    url: http://www.popadenec.ru/rss.xml
-  postall:
-    description: PostAll.ru - Хроники миров Постапокалипсиса
-    filters:
-      selectors:
-      - .inline
-      - .rate-widget
-      - '#comments'
-    method: xpath
-    method_query: //*[contains(@class, 'node-news')]
-    url: http://postall.ru/rss.xml
   pravda_mainnews:
     description: Украинская правда - важные новости
     filters:
