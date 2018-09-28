@@ -36,8 +36,10 @@ type feed struct {
 }
 
 func getURL(url string) string {
-	if content, ok := urlCache.Get(url); ok {
-		return content.(string)
+	if !noURLCache {
+		if content, ok := urlCache.Get(url); ok {
+			return content.(string)
+		}
 	}
 	client := http.Client{
 		Timeout: time.Duration(30 * time.Second),
@@ -54,7 +56,9 @@ func getURL(url string) string {
 			bodyBytes, err := ioutil.ReadAll(utf8)
 			if check(err) {
 				bodyString := string(bodyBytes)
-				urlCache.Add(url, bodyString)
+				if !noURLCache {
+					urlCache.Add(url, bodyString)
+				}
 				return bodyString
 			}
 		}

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"flag"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -20,11 +21,15 @@ import (
 )
 
 var (
-	config = struct {
+	bindHost string
+	config   = struct {
 		Feeds map[string]feed
 	}{}
-	fullFeed *feeds.Feed
-	urlCache *lru.Cache
+	configYAML    string
+	fullFeed      *feeds.Feed
+	noURLCache    bool
+	noWarmupCache bool
+	urlCache      *lru.Cache
 )
 
 func handleFeed(w http.ResponseWriter, r *http.Request) {
@@ -66,13 +71,25 @@ func buildMux() http.Handler {
 	return mux
 }
 
+func init() {
+	flag.StringVar(&configYAML, "config", "fullrss.yaml", "Config file")
+	flag.StringVar(&bindHost, "bind", ":8000", "Bind address")
+	flag.BoolVar(&noURLCache, "nocache", false, "Disable URL cache")
+	flag.BoolVar(&noWarmupCache, "nowarm", false, "No warm up URL cache")
+}
+
 func main() {
-	yamlFile, err := ioutil.ReadFile("fullrss.yaml")
+	flag.Parse()
+	yamlFile, err := ioutil.ReadFile(configYAML)
 	if check(err) {
 		err = yaml.Unmarshal(yamlFile, &config)
 		if check(err) {
-			urlCache, err = lru.New(1000)
-			go urlCacheWarming()
+			if !noURLCache {
+				urlCache, err = lru.New(1000)
+				if !noWarmupCache {
+					go urlCacheWarming()
+				}
+			}
 			if check(err) {
 				if _, ok := os.LookupEnv("LAMBDA_TASK_ROOT"); ok {
 					lambda.Start(func() agw.GatewayHandler {
@@ -84,7 +101,7 @@ func main() {
 				} else {
 					srv := &http.Server{
 						Handler:      buildMux(),
-						Addr:         ":8000",
+						Addr:         bindHost,
 						WriteTimeout: 60 * time.Second,
 						ReadTimeout:  60 * time.Second,
 					}
