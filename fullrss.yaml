@@ -15,15 +15,18 @@ feeds:
       - Виджет от SocialMart
       - 'Источник:'
       - 'Источники:'
-    method: pyquery
+    max_workers: 100
+    method: query
     method_query: .body-full
     url: https://3dnews.ru/news/rss/
   alternathistory:
     base_href: http://alternathistory.com
     description: Альтернативная История
+    max_workers: 5
     method: readability
     url: http://feeds.feedburner.com/alternathistory
   antropogenez.ru:
+    base_href: http://antropogenez.ru
     description: Antropogenez.ru - Портал об эволюции человека
     filters:
       selectors:
@@ -35,7 +38,7 @@ feeds:
     url: https://feeds.feedburner.com/Antropogenez
   automation-remarks:
     description: Заметки Автоматизатора
-    method: pyquery
+    method: query
     method_query: .post-content
     url: http://automation-remarks.com/rss/index.rss
   cbio:
@@ -46,7 +49,7 @@ feeds:
       - .your_com
       - .back_list
       - .icons
-    method: pyquery
+    method: query
     method_query: .left_block
     url: http://cbio.ru/?rss
   elementy:
@@ -55,7 +58,7 @@ feeds:
     url: http://elementy.ru/rss/news
   habrahabr:
     description: Хабрахабр
-    method: pyquery
+    method: query
     method_query: .post__body_full
     url: https://habr.com/rss/all/all/
   iphones.ru-halyava:
@@ -72,21 +75,23 @@ feeds:
       - .postpage_telega
       - .postpage__favorites
       - .post_author_desc
+      - .post-ratings
+      - .postpage_dont_forget_other
       text:
       - Самые сочные цены на технику Apple
       - крутых скидки специально для вас
-    method: pyquery
+      - предзаказ на iPhone
+    method: query
     method_query: .post
     url: http://www.iphones.ru/tag/rasprodazhi/feed
   itc:
-    charset: UTF-8
     description: ITC.UA
     filters:
       selectors:
       - .entry-tags
       - .hotline-linker
       - .post-ratings-wrp
-    method: pyquery
+    method: query
     method_query: .post-txt
     url: http://itc.ua/rss/news.xml
   javacodegeeks:
@@ -95,7 +100,7 @@ feeds:
       selectors:
       - .ulp-inline-window
       - .attribution
-    method: pyquery
+    method: query
     method_query: '#the-post'
     url: https://www.javacodegeeks.com/feed/
   kg-portal:
@@ -113,7 +118,7 @@ feeds:
       - .b-box
       - .b-topic__socials
       - .b-inline-topics-box
-    method: pyquery
+    method: query
     method_query: .b-topic__content
     url: http://lenta.ru/rss/news/science
   liganewstop:
@@ -132,15 +137,15 @@ feeds:
       - Подписывайтесь на аккаунт LIGA.net
       - 'Смотрите также:'
       - 'Читайте также:'
-    method: pyquery
-    method_query: .news-wrap
+    method: query
+    method_query: .news-wrap, .exclusive-content, .live-news
     url: http://www.liga.net/news/top/rss.xml
   meddaily:
     description: MedDaily - Новости медицины
     filters:
       selectors:
       - .topic_image_subscibe
-    method: pyquery
+    method: query
     method_query: '.topic_text[style="margin-bottom: 25px"]'
     url: http://meddaily.ru/rss
   medportalnews:
@@ -148,7 +153,7 @@ feeds:
     filters:
       selectors:
       - .linkrmore
-    method: pyquery
+    method: query
     method_query: div[itemprop="articleBody"]
     url: http://medportal.ru/news/rss/
   mirf:
@@ -163,11 +168,13 @@ feeds:
       - .hc-link
       text:
       - comments powered by HyperComments
-    method: pyquery
+    max_workers: 5
+    method: query
     method_query: .entry-content
     url: http://www.mirf.ru/feed
   naked_science:
     description: Naked Science - Научно популярный портал
+    max_workers: 2
     method: readability
     url: http://naked-science.ru/feedrss.xml
   pravda_mainnews:
@@ -177,32 +184,30 @@ feeds:
       - .tags
       text:
       - Если вы заметили ошибку, выделите ее мышкой и нажмите Ctrl+Enter
-    method: pyquery
+    method: query
     method_query: .post_news__text
     url: http://www.pravda.com.ua/rus/rss/view_mainnews/
   qa-hh.ua:
     description: Вакансии QA Киев / HeadHunter.ua
-    method: pyquery
-    method_query: .l-paddings.b-vacancy-desc.g-user-content
+    method: query
+    method_query: .vacancy-description
     url: https://hh.ua/search/vacancy/rss?text=Qa+engineer%2C+qa+Automation+engineer&amp;enable_snippets=true&amp;clusters=true&amp;currency_code=UAH&amp;area=115
-  qa-rabota.ua:
-    description: Вакансии QA Киев / Rabota.ua
-    method: pyquery
-    method_query: .f-vacancy-inner-wrapper, .d_content
-    url: https://goo.gl/lMxcV3
   shellhacks:
     description: ShellHacks
-    method: pyquery
+    filters:
+      selectors:
+      - .swp_social_panel
+    method: query
     method_query: .entry-content
     url: https://www.shellhacks.com/ru/feed/
   steam:
     description: Valve Steam News
-    method: pyquery
+    method: query
     method_query: .body
     url: http://store.steampowered.com/feeds/news.xml
   windowsnotesru:
     description: Заметки о Windows
-    method: pyquery
+    method: query
     method_query: .post-text
     url: http://feeds.feedburner.com/windowsnotesru
   yablyk:
@@ -213,7 +218,7 @@ feeds:
       - .article-social
       text:
       - 'Смотрите также:'
-    method: pyquery
+    method: query
     method_query: .article-entry
     url: http://yablyk.com/feed/
 settings: {}

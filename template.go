@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+package main
+
+const indexTpl = `<!DOCTYPE html>
 <html>
 <head>
     <title>Full text RSS feeds proxy</title>
@@ -20,9 +22,9 @@
         <h5 class="card-header"> Available feeds <img src="favicon.ico"></h5>
         <div class="card-body">
             <ol class="card-text">
-                {% for feed, values in feeds.items() | sort(attribute='1.description') %}
-                <li><a href="/feed/{{ feed }}" target="_blank">{{ values.description }}</a></li>
-                {% endfor %}
+				{{range $key, $value := .Feeds}}
+                <li><a href="/feed/{{ $key }}" target="_blank">{{ $value.Description }}</a></li>
+                {{end}}
             </ol>
         </div> <!-- card-body -->
     </div> <!-- card -->
@@ -32,4 +34,4 @@
     </footer>
 </div> <!-- container -->
 </body>
-</html>
+</html>`

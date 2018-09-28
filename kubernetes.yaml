@@ -17,9 +17,6 @@ spec:
       - image: n0madic/fullrss
         imagePullPolicy: Always
         name: fullrss
-        env:
-        - name: MAXITEMSIZE
-          value: 2m
       automountServiceAccountToken: false
 ---
 apiVersion: v1
