@@ -37,6 +37,7 @@ func handleFeed(w http.ResponseWriter, r *http.Request) {
 	if response == "" {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
+	w.Header().Set("Content-Type", "application/xml")
 	agw.WriteResponse(w, response, false)
 }
 
