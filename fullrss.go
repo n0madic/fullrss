@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -167,6 +168,9 @@ func getFullFeed(feed string, entry string) string {
 				fullFeed.Add(item.Value().(*feeds.Item))
 			}
 		}
+		sort.Slice(fullFeed.Items, func(i, j int) bool { 
+			return fullFeed.Items[j].Created.Before(fullFeed.Items[i].Created)
+		})
 		rss, err = fullFeed.ToRss()
 		check(err)
 	}
