@@ -84,14 +84,15 @@ func main() {
 	if check(err) {
 		err = yaml.Unmarshal(yamlFile, &config)
 		if check(err) {
+			_, isLambda := os.LookupEnv("LAMBDA_TASK_ROOT")
 			if !noURLCache {
 				urlCache, err = lru.New(1000)
-				if !noWarmupCache {
+				if !isLambda && !noWarmupCache {
 					go urlCacheWarming()
 				}
 			}
 			if check(err) {
-				if _, ok := os.LookupEnv("LAMBDA_TASK_ROOT"); ok {
+				if isLambda {
 					lambda.Start(func() agw.GatewayHandler {
 						return func(ctx context.Context, event json.RawMessage) (interface{}, error) {
 							agp := agw.NewAPIGateParser(event)
