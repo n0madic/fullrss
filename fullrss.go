@@ -35,6 +35,11 @@ type feed struct {
 	URL         string `yaml:"url"`
 }
 
+type itemWithIndex struct {
+	index int
+	item  *feeds.Item
+}
+
 func getURL(url string) string {
 	if !noURLCache {
 		if content, ok := urlCache.Get(url); ok {
@@ -66,7 +71,7 @@ func getURL(url string) string {
 	return ""
 }
 
-func getFullContent(feedConfig feed, feedItem *gofeed.Item) pool.WorkFunc {
+func getFullContent(index int, feedConfig feed, feedItem *gofeed.Item) pool.WorkFunc {
 	return func(wu pool.WorkUnit) (interface{}, error) {
 		fullContent := ""
 		content := strings.NewReader(getURL(feedItem.Link))
@@ -122,15 +127,17 @@ func getFullContent(feedConfig feed, feedItem *gofeed.Item) pool.WorkFunc {
 				}
 			}
 		}
-		return &feeds.Item{
-			Title: feedItem.Title,
-			Link:  &feeds.Link{Href: feedItem.Link},
-			Author: &feeds.Author{
-				Name:  checkStructField(feedItem.Author, "Name", ""),
-				Email: checkStructField(feedItem.Author, "Email", "")},
-			Created:     *feedItem.PublishedParsed,
-			Description: fullContent,
-		}, nil
+		return &itemWithIndex{
+			index: index,
+			item: &feeds.Item{
+				Title: feedItem.Title,
+				Link:  &feeds.Link{Href: feedItem.Link},
+				Author: &feeds.Author{
+					Name:  checkStructField(feedItem.Author, "Name", ""),
+					Email: checkStructField(feedItem.Author, "Email", "")},
+				Created:     *feedItem.PublishedParsed,
+				Description: fullContent,
+			}}, nil
 	}
 }
 
@@ -148,12 +155,12 @@ func getFullFeed(feed string, entry string) string {
 		batch := p.Batch()
 		if entry == "" {
 			for i := 0; i < len(sourceFeed.Items); i++ {
-				batch.Queue(getFullContent(config.Feeds[feed], sourceFeed.Items[i]))
+				batch.Queue(getFullContent(i, config.Feeds[feed], sourceFeed.Items[i]))
 			}
 		} else {
 			index, err := strconv.ParseInt(entry, 10, 0)
 			if check(err) {
-				batch.Queue(getFullContent(config.Feeds[feed], sourceFeed.Items[index]))
+				batch.Queue(getFullContent(int(index), config.Feeds[feed], sourceFeed.Items[index]))
 			}
 		}
 		batch.QueueComplete()
@@ -161,10 +168,11 @@ func getFullFeed(feed string, entry string) string {
 			Title:       sourceFeed.Title,
 			Link:        &feeds.Link{Href: sourceFeed.Link},
 			Description: sourceFeed.Description,
+			Items:       make([]*feeds.Item, len(sourceFeed.Items)),
 		}
 		for item := range batch.Results() {
 			if check(item.Error()) {
-				fullFeed.Add(item.Value().(*feeds.Item))
+				fullFeed.Items[item.Value().(*itemWithIndex).index] = (item.Value().(*itemWithIndex).item)
 			}
 		}
 		rss, err = fullFeed.ToRss()
