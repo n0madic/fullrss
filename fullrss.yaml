@@ -19,6 +19,15 @@ feeds:
     method: query
     method_query: .body-full
     url: https://3dnews.ru/news/rss/
+  alphacentauri:
+    description: Alpha Centauri
+    filters:
+      selectors:
+      - .mistape_caption
+      - .oss_horizontal_share
+    method: query
+    method_query: .entry-inner
+    url: https://thealphacentauri.net/feed/
   alternathistory:
     base_href: http://alternathistory.com
     description: Альтернативная История
