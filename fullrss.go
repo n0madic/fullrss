@@ -91,10 +91,12 @@ func getFullContent(feedConfig feed, feedItem *gofeed.Item) pool.WorkFunc {
 				doc, err := htmlquery.Parse(content)
 				if check(err) {
 					list := htmlquery.Find(doc, feedConfig.MethodQuery)
-					var b bytes.Buffer
-					err = html.Render(&b, list[0])
-					check(err)
-					fullContent = b.String()
+					if len(list) > 0 {
+						var b bytes.Buffer
+						err = html.Render(&b, list[0])
+						check(err)
+						fullContent = b.String()
+					}
 				}
 			default:
 				doc, err := readability.FromReader(content, baseURL)
@@ -102,7 +104,9 @@ func getFullContent(feedConfig feed, feedItem *gofeed.Item) pool.WorkFunc {
 					fullContent = doc.RawContent
 				}
 			}
-			if fullContent != "" {
+			if fullContent == "" {
+				fullContent = feedItem.Description
+			} else {
 				doc, err := goquery.NewDocumentFromReader(strings.NewReader(fullContent))
 				if check(err) {
 					if len(feedConfig.Filters.Selectors) > 0 {
@@ -168,7 +172,7 @@ func getFullFeed(feed string, entry string) string {
 				fullFeed.Add(item.Value().(*feeds.Item))
 			}
 		}
-		sort.Slice(fullFeed.Items, func(i, j int) bool { 
+		sort.Slice(fullFeed.Items, func(i, j int) bool {
 			return fullFeed.Items[j].Created.Before(fullFeed.Items[i].Created)
 		})
 		rss, err = fullFeed.ToRss()
