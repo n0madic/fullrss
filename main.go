@@ -2,18 +2,13 @@ package main
 
 import (
 	"bytes"
-	"context"
-	"encoding/json"
 	"flag"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
-	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/davyzhang/agw"
 	"github.com/go-zoo/bone"
 	"github.com/gorilla/feeds"
 	lru "github.com/hashicorp/golang-lru"
@@ -38,7 +33,7 @@ func handleFeed(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 	w.Header().Set("Content-Type", "application/xml")
-	agw.WriteResponse(w, response, false)
+	w.Write([]byte(response))
 }
 
 func handleRoot(w http.ResponseWriter, r *http.Request) {
@@ -51,7 +46,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 			var tpl bytes.Buffer
 			err = t.Execute(&tpl, config)
 			if check(err) {
-				agw.WriteResponse(w, tpl.String(), false)
+				w.Write(tpl.Bytes())
 			}
 		}
 	}
@@ -60,7 +55,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 func handleFavicon(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/x-icon")
 	w.Header().Set("Cache-Control", "public, max-age=7776000")
-	agw.WriteResponse(w, rssicon, false)
+	w.Write(rssicon)
 }
 
 func buildMux() http.Handler {
@@ -85,31 +80,19 @@ func main() {
 	if check(err) {
 		err = yaml.Unmarshal(yamlFile, &config)
 		if check(err) {
-			_, isLambda := os.LookupEnv("LAMBDA_TASK_ROOT")
 			if !noURLCache {
 				urlCache, err = lru.New(1000)
-				if !isLambda && !noWarmupCache {
+				if !noWarmupCache {
 					go urlCacheWarming()
 				}
 			}
-			if check(err) {
-				if isLambda {
-					lambda.Start(func() agw.GatewayHandler {
-						return func(ctx context.Context, event json.RawMessage) (interface{}, error) {
-							agp := agw.NewAPIGateParser(event)
-							return agw.Process(agp, buildMux()), nil
-						}
-					}())
-				} else {
-					srv := &http.Server{
-						Handler:      buildMux(),
-						Addr:         bindHost,
-						WriteTimeout: 60 * time.Second,
-						ReadTimeout:  60 * time.Second,
-					}
-					log.Fatal(srv.ListenAndServe())
-				}
+			srv := &http.Server{
+				Handler:      buildMux(),
+				Addr:         bindHost,
+				WriteTimeout: 60 * time.Second,
+				ReadTimeout:  60 * time.Second,
 			}
+			log.Fatal(srv.ListenAndServe())
 		}
 	}
 }
