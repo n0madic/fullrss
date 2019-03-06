@@ -1,0 +1,33 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: fullrss
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: fullrss
+    spec:
+      containers:
+      - image: n0madic/fullrss
+        imagePullPolicy: Always
+        name: fullrss
+      automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fullrss
+spec:
+  type: LoadBalancer
+  selector:
+    app: fullrss
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
