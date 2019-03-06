@@ -15,7 +15,7 @@ feeds:
       - Виджет от SocialMart
       - 'Источник:'
       - 'Источники:'
-    max_workers: 100
+    max_workers: 50
     method: query
     method_query: .body-full
     url: https://3dnews.ru/news/rss/
@@ -24,7 +24,10 @@ feeds:
     filters:
       selectors:
       - .mistape_caption
+      - .newsletter-subscription
       - .oss_horizontal_share
+      - .vortex-container-vote
+      - '#desc_0'
     method: query
     method_query: .entry-inner
     url: https://thealphacentauri.net/feed/
@@ -42,8 +45,8 @@ feeds:
       - .news-single-backlink
       - .next-prev-news
       - .lupa
-    method: xpath
-    method_query: //div[@class='news-single-item']|//div[@class='entry-content']
+    method: query
+    method_query: '#content'
     url: https://feeds.feedburner.com/Antropogenez
   automation-remarks:
     description: Заметки Автоматизатора
@@ -58,10 +61,12 @@ feeds:
       - .your_com
       - .back_list
       - .icons
+      - .info_in_title
     method: query
     method_query: .left_block
     url: http://cbio.ru/?rss
   elementy:
+    base_href: http://elementy.ru
     description: Элементы - новости науки
     method: readability
     url: http://elementy.ru/rss/news
@@ -90,6 +95,8 @@ feeds:
       - Самые сочные цены на технику Apple
       - крутых скидки специально для вас
       - предзаказ на iPhone
+      - re:Store
+      - Крутые аксессы
     method: query
     method_query: .post
     url: http://www.iphones.ru/tag/rasprodazhi/feed
@@ -109,6 +116,7 @@ feeds:
       selectors:
       - .ulp-inline-window
       - .attribution
+      - .post-meta
     method: query
     method_query: '#the-post'
     url: https://www.javacodegeeks.com/feed/
