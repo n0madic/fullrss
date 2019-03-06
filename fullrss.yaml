@@ -45,6 +45,7 @@ feeds:
       - .news-single-backlink
       - .next-prev-news
       - .lupa
+      - .sm_table
     method: query
     method_query: '#content'
     url: https://feeds.feedburner.com/Antropogenez
