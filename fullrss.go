@@ -12,6 +12,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"unicode/utf8"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/antchfx/htmlquery"
@@ -69,7 +70,7 @@ func getURL(url string) string {
 
 func getFullContent(feedConfig feed, feedItem *gofeed.Item) pool.WorkFunc {
 	return func(wu pool.WorkUnit) (interface{}, error) {
-		fullContent := ""
+		fullContent := feedItem.Description
 		content := strings.NewReader(getURL(feedItem.Link))
 		if wu.IsCancelled() {
 			return nil, nil
@@ -99,12 +100,12 @@ func getFullContent(feedConfig feed, feedItem *gofeed.Item) pool.WorkFunc {
 					}
 				}
 			default:
-				doc, err := readability.FromReader(content, baseURL)
+				doc, err := readability.FromReader(content, baseURL.String())
 				if check(err) {
-					fullContent = doc.RawContent
+					fullContent = doc.Content
 				}
 			}
-			if fullContent == "" {
+			if fullContent == "" || utf8.RuneCountInString(fullContent) < utf8.RuneCountInString(feedItem.Description) {
 				fullContent = feedItem.Description
 			} else {
 				doc, err := goquery.NewDocumentFromReader(strings.NewReader(fullContent))
