@@ -28,9 +28,10 @@ type feed struct {
 	BaseHref    string `yaml:"base_href"`
 	Description string `yaml:"description"`
 	Filters     struct {
-		Selectors []string `yaml:"selectors"`
-		Text      []string `yaml:"text"`
-		Titles    []string `yaml:"titles"`
+		Descriptions []string `yaml:"descriptions"`
+		Selectors    []string `yaml:"selectors"`
+		Text         []string `yaml:"text"`
+		Titles       []string `yaml:"titles"`
 	}
 	MaxWorkers  uint   `yaml:"max_workers"`
 	Method      string `yaml:"method"`
@@ -155,7 +156,8 @@ func getFullFeed(feed string, entry string) string {
 		batch := p.Batch()
 		if entry == "" {
 			for i := 0; i < len(sourceFeed.Items); i++ {
-				if !stringIsFiltered(sourceFeed.Items[i].Title, config.Feeds[feed].Filters.Titles) {
+				if !stringIsFiltered(sourceFeed.Items[i].Title, config.Feeds[feed].Filters.Titles) &&
+					!stringIsFiltered(sourceFeed.Items[i].Description, config.Feeds[feed].Filters.Descriptions) {
 					batch.Queue(getFullContent(config.Feeds[feed], sourceFeed.Items[i]))
 				}
 			}
