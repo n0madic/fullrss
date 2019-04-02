@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/url"
 	"reflect"
+	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -51,4 +52,13 @@ func makeAllLinksAbsolute(base *url.URL, doc *goquery.Document) {
 		absoluteAttr(base, sel, "data-src")
 		absoluteAttr(base, sel, "href")
 	})
+}
+
+func stringIsFiltered(str string, filters []string) bool {
+	for _, filter := range filters {
+		if strings.Contains(strings.ToLower(str), strings.ToLower(filter)) {
+			return true
+		}
+	}
+	return false
 }
