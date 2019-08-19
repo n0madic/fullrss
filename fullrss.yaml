@@ -76,31 +76,6 @@ feeds:
     method: query
     method_query: .post__body_full
     url: https://habr.com/rss/all/all/
-  iphones.ru-halyava:
-    description: iPhones.ru - ТОП халявы
-    filters:
-      selectors:
-      - .post__neighbors
-      - .post_social_footer
-      - .social-share
-      - .post_sidebar-fb_post_block
-      - .post_page__schema_none
-      - .post__tags-cont
-      - .push-notifier-block
-      - .postpage_telega
-      - .postpage__favorites
-      - .post_author_desc
-      - .post-ratings
-      - .postpage_dont_forget_other
-      text:
-      - Самые сочные цены на технику Apple
-      - крутых скидки специально для вас
-      - предзаказ на iPhone
-      - re:Store
-      - Крутые аксессы
-    method: query
-    method_query: .post
-    url: http://www.iphones.ru/tag/rasprodazhi/feed
   itc:
     description: ITC.UA
     filters:
@@ -205,11 +180,6 @@ feeds:
     method: query
     method_query: .post_news__text
     url: http://www.pravda.com.ua/rus/rss/view_mainnews/
-  qa-hh.ua:
-    description: Вакансии QA Киев / HeadHunter.ua
-    method: query
-    method_query: .vacancy-description
-    url: https://hh.ua/search/vacancy/rss?text=Qa+engineer%2C+qa+Automation+engineer&amp;enable_snippets=true&amp;clusters=true&amp;currency_code=UAH&amp;area=115
   shellhacks:
     description: ShellHacks
     filters:
