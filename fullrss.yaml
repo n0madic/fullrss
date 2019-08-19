@@ -151,10 +151,10 @@ feeds:
       - .popular-news
       - .view-subscribe
       - .author
+      - .social-likes-new
       text:
       - Подписывайтесь на аккаунт LIGA.net
       - 'Смотрите также:'
-      - 'Читайте также:'
     method: query
     method_query: .news-wrap, .exclusive-content, .live-news
     url: http://www.liga.net/news/top/rss.xml
