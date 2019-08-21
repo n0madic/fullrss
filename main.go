@@ -1,62 +1,28 @@
 package main
 
 import (
-	"bytes"
 	"flag"
-	"html/template"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/go-zoo/bone"
-	"github.com/gorilla/feeds"
-	lru "github.com/hashicorp/golang-lru"
+	"github.com/n0madic/fullfeed"
 	yaml "gopkg.in/yaml.v2"
 )
 
 var (
 	bindHost string
 	config   = struct {
-		Feeds map[string]feed
+		Feeds map[string]fullfeed.Config
 	}{}
 	configYAML    string
-	fullFeed      *feeds.Feed
 	noURLCache    bool
 	noWarmupCache bool
-	urlCache      *lru.Cache
 )
-
-func handleFeed(w http.ResponseWriter, r *http.Request) {
-	response := getFullFeed(bone.GetValue(r, "feed"), bone.GetValue(r, "entry"))
-	if response == "" {
-		w.WriteHeader(http.StatusInternalServerError)
-	}
-	w.Header().Set("Content-Type", "application/xml")
-	w.Write([]byte(response))
-}
-
-func handleRoot(w http.ResponseWriter, r *http.Request) {
-	query := r.URL.Query().Get("feed")
-	if query != "" {
-		http.Redirect(w, r, "/feed/"+query, 301)
-	} else {
-		t, err := template.New("index").Parse(indexTpl)
-		if check(err) {
-			var tpl bytes.Buffer
-			err = t.Execute(&tpl, config)
-			if check(err) {
-				w.Write(tpl.Bytes())
-			}
-		}
-	}
-}
-
-func handleFavicon(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "image/x-icon")
-	w.Header().Set("Cache-Control", "public, max-age=7776000")
-	w.Write(rssicon)
-}
 
 func buildMux() http.Handler {
 	mux := bone.New()
@@ -77,13 +43,15 @@ func init() {
 func main() {
 	flag.Parse()
 	yamlFile, err := ioutil.ReadFile(configYAML)
-	if check(err) {
+	if checkOK(err) {
 		err = yaml.Unmarshal(yamlFile, &config)
-		if check(err) {
+		if checkOK(err) {
 			if !noURLCache {
-				urlCache, err = lru.New(1000)
-				if !noWarmupCache {
-					go urlCacheWarming()
+				err = fullfeed.InitContentCache(1000)
+				if checkOK(err) {
+					if !noWarmupCache {
+						go urlCacheWarming()
+					}
 				}
 			}
 			srv := &http.Server{
@@ -95,4 +63,23 @@ func main() {
 			log.Fatal(srv.ListenAndServe())
 		}
 	}
+}
+
+func urlCacheWarming() {
+	var wg sync.WaitGroup
+	defer timeTrack(time.Now(), "URL cache warming")
+	log.Println("Start warm up...")
+	for feed := range config.Feeds {
+		wg.Add(1)
+		go func(feed string) {
+			defer wg.Done()
+			_, errors := fullfeed.GetFullFeed(config.Feeds[feed])
+			for _, err := range errors {
+				log.Println(err)
+			}
+			log.Println(fmt.Sprintf("Cache warm up for %s completed", feed))
+		}(feed)
+	}
+	wg.Wait()
+	log.Println("Number of cached objects:", fullfeed.ContentCacheLength())
 }

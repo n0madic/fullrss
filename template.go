@@ -29,7 +29,7 @@ const indexTpl = `<!DOCTYPE html>
         </div> <!-- card-body -->
     </div> <!-- card -->
     <footer>
-        <div style="text-align: center;"><p><a href="https://github.com/n0madic/fullrss">GitHub</a> &copy; Nomadic 2018
+        <div style="text-align: center;"><p><a href="https://github.com/n0madic/fullrss">GitHub</a> &copy; Nomadic 2018-2019
         </p></div>
     </footer>
 </div> <!-- container -->

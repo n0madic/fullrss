@@ -17,7 +17,7 @@ feeds:
       - 'Источники:'
     max_workers: 50
     method: query
-    method_query: .body-full
+    method_request: .body-full
     url: https://3dnews.ru/news/rss/
   alphacentauri:
     description: Alpha Centauri
@@ -29,7 +29,7 @@ feeds:
       - .vortex-container-vote
       - '#desc_0'
     method: query
-    method_query: .entry-inner
+    method_request: .entry-inner
     url: https://thealphacentauri.net/feed/
   alternathistory:
     base_href: http://alternathistory.com
@@ -47,12 +47,12 @@ feeds:
       - .lupa
       - .sm_table
     method: query
-    method_query: '#content'
+    method_request: '#content'
     url: https://feeds.feedburner.com/Antropogenez
   automation-remarks:
     description: Заметки Автоматизатора
     method: query
-    method_query: .post-content
+    method_request: .post-content
     url: http://automation-remarks.com/rss/index.rss
   cbio:
     description: Интернет-журнал "Коммерческая биотехнология". CBio.ru
@@ -64,7 +64,7 @@ feeds:
       - .icons
       - .info_in_title
     method: query
-    method_query: .left_block
+    method_request: .left_block
     url: http://cbio.ru/?rss
   elementy:
     base_href: http://elementy.ru
@@ -74,7 +74,7 @@ feeds:
   habrahabr:
     description: Хабрахабр
     method: query
-    method_query: .post__body_full
+    method_request: .post__body_full
     url: https://habr.com/rss/all/all/
   itc:
     description: ITC.UA
@@ -84,7 +84,7 @@ feeds:
       - .hotline-linker
       - .post-ratings-wrp
     method: query
-    method_query: .post-txt
+    method_request: .post-txt
     url: http://itc.ua/rss/news.xml
   javacodegeeks:
     description: Java Code Geeks
@@ -94,7 +94,7 @@ feeds:
       - .attribution
       - .post-meta
     method: query
-    method_query: '#the-post'
+    method_request: '#the-post'
     url: https://www.javacodegeeks.com/feed/
   kg-portal:
     description: КГ-Портал - Вся правда о Голливуде
@@ -102,7 +102,7 @@ feeds:
       selectors:
       - .tabs
     method: xpath
-    method_query: //*[contains(@class, 'news_text')]
+    method_request: //*[contains(@class, 'news_text')]
     url: http://kg-portal.ru/rss/news.rss
   lentaruscience:
     description: Lenta.ru / Наука
@@ -112,7 +112,7 @@ feeds:
       - .b-topic__socials
       - .b-inline-topics-box
     method: query
-    method_query: .b-topic__content
+    method_request: .b-topic__content
     url: http://lenta.ru/rss/news/science
   liganewstop:
     description: ЛІГАБізнесІнформ топ-новости
@@ -126,12 +126,13 @@ feeds:
       - .popular-news
       - .view-subscribe
       - .author
+      - .social-likes
       - .social-likes-new
       text:
       - Подписывайтесь на аккаунт LIGA.net
       - 'Смотрите также:'
     method: query
-    method_query: .news-wrap, .exclusive-content, .live-news
+    method_request: .news-wrap, .exclusive-content, .live-news
     url: http://www.liga.net/news/top/rss.xml
   meddaily:
     description: MedDaily - Новости медицины
@@ -139,7 +140,7 @@ feeds:
       selectors:
       - .topic_image_subscibe
     method: query
-    method_query: '.topic_text[style="margin-bottom: 25px"]'
+    method_request: '.topic_text[style="margin-bottom: 25px"]'
     url: http://meddaily.ru/rss
   medportalnews:
     description: МедНовости.ру
@@ -147,7 +148,7 @@ feeds:
       selectors:
       - .linkrmore
     method: query
-    method_query: div[itemprop="articleBody"]
+    method_request: div[itemprop="articleBody"]
     url: http://medportal.ru/news/rss/
   mirf:
     description: Мир фантастики
@@ -163,11 +164,11 @@ feeds:
       - comments powered by HyperComments
     max_workers: 5
     method: query
-    method_query: .entry-content
+    method_request: .entry-content
     url: http://www.mirf.ru/feed
   naked_science:
     description: Naked Science - Научно популярный портал
-    max_workers: 2
+    max_workers: 1
     method: readability
     url: http://naked-science.ru/feedrss.xml
   pravda_mainnews:
@@ -178,7 +179,7 @@ feeds:
       text:
       - Если вы заметили ошибку, выделите ее мышкой и нажмите Ctrl+Enter
     method: query
-    method_query: .post_news__text
+    method_request: .post_news__text
     url: http://www.pravda.com.ua/rus/rss/view_mainnews/
   shellhacks:
     description: ShellHacks
@@ -186,17 +187,17 @@ feeds:
       selectors:
       - .swp_social_panel
     method: query
-    method_query: .entry-content
+    method_request: .entry-content
     url: https://www.shellhacks.com/ru/feed/
   steam:
     description: Valve Steam News
     method: query
-    method_query: .body
+    method_request: .body
     url: http://store.steampowered.com/feeds/news.xml
   windowsnotesru:
     description: Заметки о Windows
     method: query
-    method_query: .post-text
+    method_request: .post-text
     url: http://feeds.feedburner.com/windowsnotesru
   yablyk:
     description: Yablyk - Все новости Apple
@@ -207,6 +208,6 @@ feeds:
       text:
       - 'Смотрите также:'
     method: query
-    method_query: .article-entry
+    method_request: .article-entry
     url: http://yablyk.com/feed/
 settings: {}
