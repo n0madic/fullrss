@@ -66,6 +66,15 @@ feeds:
     method: query
     method_request: .left_block
     url: http://cbio.ru/?rss
+  comicsdb:
+    description: Новые переводы комиксов в Базе переводов (без DC и Marvel)
+    filters:
+      descriptions:
+      - DC Comics
+      - Marvel
+    method: query
+    method_request: body > div.container > div:nth-child(6)
+    url: https://comicsdb.ru/rss
   elementy:
     base_href: http://elementy.ru
     description: Элементы - новости науки
