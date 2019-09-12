@@ -66,7 +66,7 @@ feeds:
     method: query
     method_request: .left_block
     url: http://cbio.ru/?rss
-  comicsdb:
+  comicsdb-nosuperheroes:
     description: Новые переводы комиксов в Базе переводов (без DC и Marvel)
     filters:
       descriptions:
