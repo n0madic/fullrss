@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 
@@ -34,8 +35,12 @@ func buildMux() http.Handler {
 }
 
 func init() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000"
+	}
 	flag.StringVar(&configYAML, "config", "fullrss.yaml", "Config file")
-	flag.StringVar(&bindHost, "bind", ":8000", "Bind address")
+	flag.StringVar(&bindHost, "bind", ":"+port, "Bind address")
 	flag.BoolVar(&noURLCache, "nocache", false, "Disable URL cache")
 	flag.BoolVar(&noWarmupCache, "nowarm", false, "No warm up URL cache")
 }
