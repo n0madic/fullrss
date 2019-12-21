@@ -49,7 +49,7 @@ func handleFeed(w http.ResponseWriter, r *http.Request) {
 	} else {
 		feed, errors := fullfeed.GetFullFeed(feedConfig)
 		for _, err := range errors {
-			log.Println(err)
+			log.Printf("[%s] error: %s", feedName, err)
 
 			if feed == nil {
 				w.WriteHeader(http.StatusInternalServerError)

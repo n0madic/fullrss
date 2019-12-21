@@ -80,7 +80,7 @@ func urlCacheWarming() {
 			defer wg.Done()
 			_, errors := fullfeed.GetFullFeed(config.Feeds[feed])
 			for _, err := range errors {
-				log.Println(err)
+				log.Printf("[%s] error: %s", feed, err)
 			}
 			log.Println(fmt.Sprintf("Cache warm up for %s completed", feed))
 		}(feed)
