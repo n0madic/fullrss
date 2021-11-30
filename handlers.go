@@ -46,6 +46,11 @@ func handleFeed(w http.ResponseWriter, r *http.Request) {
 		}
 
 		response, err = fullfeed.GetFullContent(feedConfig, sourceFeed.Items[index].Link.Href)
+		if !checkOK(err) {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
 	} else {
 		feed, errors := fullfeed.GetFullFeed(feedConfig)
 		for _, err := range errors {
@@ -74,7 +79,7 @@ func handleFeed(w http.ResponseWriter, r *http.Request) {
 func handleRoot(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query().Get("feed")
 	if query != "" {
-		http.Redirect(w, r, "/feed/"+query, 301)
+		http.Redirect(w, r, "/feed/"+query, http.StatusMovedPermanently)
 	} else {
 		t, err := template.New("index").Parse(indexTpl)
 		if checkOK(err) {
