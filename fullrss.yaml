@@ -31,12 +31,6 @@ feeds:
     method: query
     method_request: .entry-inner
     url: https://thealphacentauri.net/feed/
-  alternathistory:
-    base_href: http://alternathistory.com
-    description: Альтернативная История
-    max_workers: 5
-    method: readability
-    url: http://feeds.feedburner.com/alternathistory
   antropogenez.ru:
     base_href: http://antropogenez.ru
     description: Antropogenez.ru - Портал об эволюции человека
@@ -83,7 +77,7 @@ feeds:
   habrahabr:
     description: Хабрахабр
     method: query
-    method_request: .post__body_full
+    method_request: '#post-content-body'
     url: https://habr.com/rss/all/all/
   itc:
     description: ITC.UA
@@ -137,6 +131,10 @@ feeds:
       - .author
       - .social-likes
       - .social-likes-new
+      - .social-shares
+      - .tags
+      - .vakansii-block-article
+      - .warning
       text:
       - Подписывайтесь на аккаунт LIGA.net
       - 'Смотрите также:'
@@ -157,8 +155,8 @@ feeds:
       selectors:
       - .linkrmore
     method: query
-    method_request: div[itemprop="articleBody"]
-    url: http://medportal.ru/news/rss/
+    method_request: .article
+    url: https://medportal.ru/mednovosti.rss
   mirf:
     description: Мир фантастики
     filters:
@@ -169,6 +167,10 @@ feeds:
       - .cb-review-box
       - .su-see-also
       - .hc-link
+      - .section_comment_btn
+      - .comment_block
+      - .with_sidebar_right
+      - .content_footer
       text:
       - comments powered by HyperComments
     max_workers: 5
@@ -180,6 +182,11 @@ feeds:
     max_workers: 1
     method: readability
     url: http://naked-science.ru/feedrss.xml
+    filters:
+      selectors:
+      - div[data-shesht-modal-name="comment-spam"]
+      - noindex
+      - '#shesht-other-news-block'
   pravda_mainnews:
     description: Украинская правда - важные новости
     filters:
@@ -188,7 +195,7 @@ feeds:
       text:
       - Если вы заметили ошибку, выделите ее мышкой и нажмите Ctrl+Enter
     method: query
-    method_request: .post_news__text
+    method_request: .post_text,.post__text
     url: http://www.pravda.com.ua/rus/rss/view_mainnews/
   shellhacks:
     description: ShellHacks
@@ -197,7 +204,7 @@ feeds:
       - .swp_social_panel
     method: query
     method_request: .entry-content
-    url: https://www.shellhacks.com/ru/feed/
+    url: http://www.shellhacks.com/feed/
   steam:
     description: Valve Steam News
     method: query
@@ -214,6 +221,8 @@ feeds:
       selectors:
       - .article-footer
       - .article-social
+      - .rmp-wp-plugin
+      - blockquote
       text:
       - 'Смотрите также:'
     method: query
