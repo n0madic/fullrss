@@ -1,19 +1,24 @@
-FROM golang:alpine
+FROM golang:alpine AS builder
 
-RUN apk add --quiet --no-cache build-base ca-certificates git
+RUN apk add --quiet --no-cache ca-certificates git
 
-ADD . /go/src/fullrss
+WORKDIR /src
 
-RUN go get -d -v fullrss
-RUN go install -ldflags "-linkmode external -extldflags -static" fullrss
+ADD go.* ./
+
+RUN go mod download
+
+ADD *.go ./
+
+RUN go install --tags netgo,osusergo -ldflags="-s -w"
 
 
 FROM scratch
 
-COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=0 /go/bin/fullrss /
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /go/bin/* /usr/bin/
 COPY fullrss.yaml /
 
 EXPOSE 8000
 
-ENTRYPOINT [ "/fullrss" ]
+ENTRYPOINT [ "fullrss" ]
