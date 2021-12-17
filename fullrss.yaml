@@ -17,16 +17,18 @@ feeds:
       - 'Источники:'
     max_workers: 50
     method: query
-    method_request: .body-full
+    method_request: .body-full, .body-full-news
     url: https://3dnews.ru/news/rss/
   alphacentauri:
     description: Alpha Centauri
     filters:
       selectors:
+      - .add-bookmark
       - .mistape_caption
       - .newsletter-subscription
       - .oss_horizontal_share
       - .vortex-container-vote
+      - .wp-block-otfm-little-spoiler
       - '#desc_0'
     method: query
     method_request: .entry-inner
@@ -84,8 +86,11 @@ feeds:
     filters:
       selectors:
       - .entry-tags
+      - .hidden-sm
       - .hotline-linker
       - .post-ratings-wrp
+      - .visible-sm
+      - .wp-embedded-content
     method: query
     method_request: .post-txt
     url: http://itc.ua/rss/news.xml
@@ -95,6 +100,7 @@ feeds:
       selectors:
       - .ulp-inline-window
       - .attribution
+      - .e3lan-post
       - .post-meta
     method: query
     method_request: '#the-post'
@@ -111,11 +117,9 @@ feeds:
     description: Lenta.ru / Наука
     filters:
       selectors:
-      - .b-box
-      - .b-topic__socials
-      - .b-inline-topics-box
+      - .box-inline-topic
     method: query
-    method_request: .b-topic__content
+    method_request: .topic-body
     url: http://lenta.ru/rss/news/science
   liganewstop:
     description: ЛІГАБізнесІнформ топ-новости
@@ -135,6 +139,9 @@ feeds:
       - .tags
       - .vakansii-block-article
       - .warning
+      - .readtoo-sp-area
+      - .more-link
+      - .opinion-contacts
       text:
       - Подписывайтесь на аккаунт LIGA.net
       - 'Смотрите также:'
@@ -153,7 +160,9 @@ feeds:
     description: МедНовости.ру
     filters:
       selectors:
+      - .incut
       - .linkrmore
+      - .time_to_read
     method: query
     method_request: .article
     url: https://medportal.ru/mednovosti.rss
