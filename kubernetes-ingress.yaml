@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fullrss
@@ -8,6 +8,9 @@ spec:
   revisionHistoryLimit: 1
   strategy:
     type: RollingUpdate
+  selector:
+    matchLabels:
+      app: fullrss
   template:
     metadata:
       labels:
@@ -30,7 +33,7 @@ spec:
   - protocol: TCP
     port: 8000
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: fullrss
@@ -42,6 +45,9 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: fullrss
-          servicePort: 8000
+          service:
+            name: fullrss
+            port:
+              number: 8000
